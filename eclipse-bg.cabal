@@ -1,0 +1,87 @@
+-- This file has been generated from package.yaml by hpack version 0.28.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 951b0bd0b26afd8a6bf06e000e450685573506a2ea09bd77d968e04633a6bb48
+
+name:           eclipse-bg
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/traunio/eclipse-bg#readme>
+homepage:       https://github.com/traunio/eclipse-bg#readme
+bug-reports:    https://github.com/traunio/eclipse-bg/issues
+author:         Tapani Raunio
+maintainer:     tapani.raunio@gmail.com
+copyright:      Tapani Raunio
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/traunio/eclipse-bg
+
+library
+  hs-source-dirs:
+      src
+  build-depends:
+      aeson >=1.1.0.0
+    , base >=4.7 && <5
+    , blaze-html >0.9.0.0
+    , blaze-markup >0.8.0.0
+    , containers >=0.5
+    , scotty >0.10.0
+    , statistics >0.14.0.0
+    , text >1.0.0.0
+    , wai-middleware-static >0.8.0
+  exposed-modules:
+      Lib
+      Routes
+      Views
+  other-modules:
+      Paths_eclipse_bg
+  default-language: Haskell2010
+
+executable eclipse-bg-exe
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson >=1.1.0.0
+    , base >=4.7 && <5
+    , blaze-html >0.9.0.0
+    , blaze-markup >0.8.0.0
+    , containers >=0.5
+    , eclipse-bg
+    , scotty >0.10.0
+    , statistics >0.14.0.0
+    , text >1.0.0.0
+    , wai-middleware-static >0.8.0
+  other-modules:
+      Paths_eclipse_bg
+  default-language: Haskell2010
+
+test-suite eclipse-bg-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson >=1.1.0.0
+    , base >=4.7 && <5
+    , blaze-html >0.9.0.0
+    , blaze-markup >0.8.0.0
+    , containers >=0.5
+    , eclipse-bg
+    , scotty >0.10.0
+    , statistics >0.14.0.0
+    , text >1.0.0.0
+    , wai-middleware-static >0.8.0
+  other-modules:
+      Paths_eclipse_bg
+  default-language: Haskell2010

@@ -1,0 +1,5 @@
+.stack-work/
+*~
+*/*~
+Static/node_modules
+Static/package-lock.json

@@ -7,14 +7,26 @@ import Web.Scotty as S
 import Text.Blaze.Html5 as H
 import Text.Blaze.Html5.Attributes as A
 import Text.Blaze.Html.Renderer.Pretty
-import Text.Blaze.Internal (customAttribute)
+import Text.Blaze.Internal (customAttribute, dataAttribute)
 
--- Helper functions for correct 
+-- Helper functions for correct attributes
 integrity :: AttributeValue -> Attribute
 integrity = customAttribute "integrity"
 
 crossorigin :: AttributeValue -> Attribute
 crossorigin = customAttribute "crossorigin"
+
+dataToggle :: AttributeValue -> Attribute
+dataToggle = dataAttribute "toggle"
+
+dataTarget :: AttributeValue -> Attribute
+dataTarget = dataAttribute "target"
+
+ariaExpanded :: AttributeValue -> Attribute
+ariaExpanded = customAttribute "aria-expanded"
+
+ariaControls :: AttributeValue -> Attribute
+ariaControls = customAttribute "aria-controls"
 
 indexPage :: ActionM ()
 indexPage = do
@@ -48,7 +60,7 @@ indexPage = do
 headerStuff = H.head $ do
   H.title "Eclipse boardgame's ship analysis"
   H.meta ! charset  "utf-8"
-  H.meta ! name "viewport" ! content "width=device-width, initial-scale=1, shrink-to-fit=no" 
+  H.meta ! name "viewport" ! content "width=device-width, initial-scale=1, shrink-to-fit=yes" 
   H.link ! rel "stylesheet" !
     href "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" !
     integrity "sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" !
@@ -80,60 +92,75 @@ interceptorCard =  H.div ! class_ "card" $ do
     H.div ! class_ "card-header" $ do
       H.div ! class_ "d-flex align-items-baseline" $ do
         H.h3 ! class_ "mx-2" $ "Interceptor"
+        H.button ! class_ "btn btn-primary" ! type_ "button" ! dataToggle "collapse"
+          ! dataTarget "#intercollapse" ! ariaExpanded "false"
+          ! ariaControls "intercollapse" $ "Show/Hide"
+    H.div ! class_ "card-body"  $ do
+      H.div ! class_ "collapse" ! A.id "intercollapse" $ do 
         select8Ships "intercept_fleet"
-    H.div ! class_ "card-body" $ do
-      H.ul ! class_ "list-group" $ do
-        listItem' "intercept_1" selectEmpty
-        listItem' "intercept_2" selectIon
-        listItem' "intercept_3" selectNuclearDrive
-        listItem' "intercept_4" selectNuclearSource
+        H.ul ! class_ "list-group" $ do
+          listItem' "intercept_1" selectEmpty
+          listItem' "intercept_2" selectIon
+          listItem' "intercept_3" selectNuclearDrive
+          listItem' "intercept_4" selectNuclearSource
 
 cruiserCard :: Html
 cruiserCard =  H.div ! class_ "card" $ do
     H.div ! class_ "card-header" $ do
       H.div ! class_ "d-flex align-items-baseline" $ do
         H.h3 ! class_ "mx-2" $ "Cruiser"
-        select4Ships "cruiser_fleet"
+        H.button ! class_ "btn btn-primary" ! type_ "button" ! dataToggle "collapse"
+          ! dataTarget "#cruisercollapse" ! ariaExpanded "false"
+          ! ariaControls "cruisercollapse" $ "Show/Hide"
     H.div ! class_ "card-body" $ do
-      H.ul ! class_ "list-group" $ do
-        listItem' "cruiser_1" selectEmpty
-        listItem' "cruiser_2" selectIon
-        listItem' "cruiser_3" selectNuclearDrive
-        listItem' "cruiser_4" selectNuclearSource
-        listItem' "cruiser_5" selectHull
-        listItem' "cruiser_6" selectComputer
-
+      H.div ! class_ "collapse" ! A.id "cruisercollapse" $ do 
+        select4Ships "cruiser_fleet"
+        H.ul ! class_ "list-group" $ do
+          listItem' "cruiser_1" selectEmpty
+          listItem' "cruiser_2" selectIon
+          listItem' "cruiser_3" selectNuclearDrive
+          listItem' "cruiser_4" selectNuclearSource
+          listItem' "cruiser_5" selectHull
+          listItem' "cruiser_6" selectComputer
 
 dreadnoughtCard :: Html
 dreadnoughtCard =  H.div ! class_ "card" $ do
     H.div ! class_ "card-header" $ do
       H.div ! class_ "d-flex align-items-baseline" $ do
         H.h3 ! class_ "mx-2" $ "Dreadnought"
-        select2Ships "dread_fleet"
+        H.button ! class_ "btn btn-primary" ! type_ "button" ! dataToggle "collapse"
+          ! dataTarget "#dreadcollapse" ! ariaExpanded "false"
+          ! ariaControls "dreadcollapse" $ "Show/Hide"
     H.div ! class_ "card-body" $ do
-      H.ul ! class_ "list-group" $ do
-        listItem' "dread_1" selectEmpty
-        listItem' "dread_2" selectIon
-        listItem' "dread_3" selectIon
-        listItem' "dread_4" selectNuclearDrive
-        listItem' "dread_5" selectNuclearSource 
-        listItem' "dread_6" selectHull
-        listItem' "dread_7" selectHull
-        listItem' "dread_8" selectComputer
+      H.div ! class_ "collapse" ! A.id "dreadcollapse" $ do 
+        select2Ships "dread_fleet"
+        H.ul ! class_ "list-group" $ do
+          listItem' "dread_1" selectEmpty
+          listItem' "dread_2" selectIon
+          listItem' "dread_3" selectIon
+          listItem' "dread_4" selectNuclearDrive
+          listItem' "dread_5" selectNuclearSource 
+          listItem' "dread_6" selectHull
+          listItem' "dread_7" selectHull
+          listItem' "dread_8" selectComputer
 
 starbaseCard :: Html
 starbaseCard =  H.div ! class_ "card" $ do
     H.div ! class_ "card-header" $ do
       H.div ! class_ "d-flex align-items-baseline" $ do
         H.h3 ! class_ "mx-2" $ "Starbase"
-        select4Ships "starbase_fleet"
+        H.button ! class_ "btn btn-primary" ! type_ "button" ! dataToggle "collapse"
+          ! dataTarget "#starcollapse" ! ariaExpanded "false"
+          ! ariaControls "starcollapse" $ "Show/Hide"        
     H.div ! class_ "card-body" $ do
-      H.ul ! class_ "list-group" $ do
-        listItem' "starbase_1" selectEmpty
-        listItem' "starbase_2" selectIon
-        listItem' "starbase_3" selectHull
-        listItem' "starbase_4" selectHull
-        listItem' "starbase_5" selectComputer
+      H.div ! class_ "collapse" ! A.id "dreadcollapse" $ do 
+        select4Ships "starbase_fleet"
+        H.ul ! class_ "list-group" $ do
+          listItem' "starbase_1" selectEmpty
+          listItem' "starbase_2" selectIon
+          listItem' "starbase_3" selectHull
+          listItem' "starbase_4" selectHull
+          listItem' "starbase_5" selectComputer
 
 selectEnemyShields :: Html
 selectEnemyShields = H.select ! class_ "custom-select" ! A.id "enemy-shields" $ do
@@ -147,7 +174,7 @@ selectEnemyShields = H.select ! class_ "custom-select" ! A.id "enemy-shields" $ 
 
 
 select8Ships :: AttributeValue -> Html
-select8Ships idx =  H.select ! class_ "custom-select" ! A.id idx $ do
+select8Ships idx =  H.select ! class_ "custom-select my-2" ! A.id idx $ do
   optionsTo4
   H.option ! value "5" $  "Five"
   H.option ! value "6" $  "Six"
@@ -155,11 +182,11 @@ select8Ships idx =  H.select ! class_ "custom-select" ! A.id idx $ do
   H.option ! value "8" $  "Eight"
 
 select4Ships :: AttributeValue -> Html
-select4Ships idx =  H.select ! class_ "custom-select" ! A.id idx $ do
+select4Ships idx =  H.select ! class_ "custom-select my-2" ! A.id idx $ do
   optionsTo4
 
 select2Ships :: AttributeValue -> Html
-select2Ships idx =  H.select ! class_ "custom-select" ! A.id idx $ do
+select2Ships idx =  H.select ! class_ "custom-select my-2" ! A.id idx $ do
   H.option ! value "0" $ "Zero in fleet"
   H.option ! value "1" $  "One" 
   H.option ! value "2" $ "Two"
